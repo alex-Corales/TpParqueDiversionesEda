@@ -30,4 +30,8 @@ public class Fila<TIPO>{
     public boolean filaVacia() {
         return fila.isEmpty();
     }
+    
+    public int verTamanio(){
+        return fila.size();
+    }
 }
