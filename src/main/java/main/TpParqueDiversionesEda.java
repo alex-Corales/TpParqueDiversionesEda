@@ -21,7 +21,7 @@ public class TpParqueDiversionesEda {
     visitantes hasta que haya suficiente espacio disponible dentro del parque.
     */
     
-    public static void controlCapacidad(){
+    public static void controlCapacidad(Fila visistante){
         
     }
     
