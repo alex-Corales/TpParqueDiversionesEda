@@ -25,7 +25,28 @@ public class TpParqueDiversionesEda {
         
     }
     
-    public static void main(String[] args) {
-        Fila<Visitante> visitante = new Fila();
+    /*
+    Busqueda de personas por nombre dentro de la fila general del parque.
+    Si la persona esta dentro de la fila, es porque se encuentra dentro del parque.
+    */
+    
+    public static boolean BuscarVisitante(String nombre){
+        boolean esta = false;
+        for (int i = 0; i < visitante.verTamanio(); i++) {
+            if (visitante.frente().getNombre().equalsIgnoreCase(nombre))
+                esta = true;
+        }
+        return esta;
     }
-}
+    
+    /* Se declara la fila visitante fuera del main para que sean accesibles
+    desde los metodos definidos.
+    */
+    
+    static Fila<Visitante> visitante = new Fila();
+    
+    public static void main(String[] args) {
+       
+    }
+    
+

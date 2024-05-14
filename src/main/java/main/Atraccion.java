@@ -25,13 +25,5 @@ public class Atraccion {
         visitantes.eliminar();
     }
     
-    public boolean BuscarVisitante(String nombre){
-        boolean esta = false;
-        for (int i = 0; i < visitantes.verTamanio(); i++) {
-            if (visitantes.frente().getNombre().equalsIgnoreCase(nombre))
-                esta = true;
-        }
-        return esta;
-    }
     
 }
