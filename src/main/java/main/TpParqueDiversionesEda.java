@@ -10,7 +10,7 @@ public class TpParqueDiversionesEda {
     agrega a la cola general de entrada. Cada visitante tiene un identificador único
     */
     
-    public boolean registrarEntrada(Visitante vis) {
+    public static boolean registrarEntrada(Visitante vis) {
         if (visitantesActuales >= capacidadMaxima) {
             System.out.println("El parque está lleno");
             return false;
@@ -25,11 +25,12 @@ public class TpParqueDiversionesEda {
     Ahora al no estar en la fila podemos decir que no se encuentra en el parque.
     */
     
-    public static  void despedirVisitante(Visitante persona){
+    public static void despedirVisitante(Visitante persona){
         for (int i = 0; i < visitante.verTamanio(); i++) {
             if (visitante.frente() == persona)
                 visitante.eliminar();
         }
+        visitantesActuales--;
     }
     
     /*
@@ -51,8 +52,8 @@ public class TpParqueDiversionesEda {
     */
     
     static Fila<Visitante> visitante = new Fila();
-    private int capacidadMaxima = 100; 
-    private int visitantesActuales = 0;
+    static int capacidadMaxima = 100; 
+    static int visitantesActuales = 0;
     
     public static void main(String[] args) {
        
