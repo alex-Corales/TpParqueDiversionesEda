@@ -3,14 +3,14 @@ package tda;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Fila<TIPO>{
-    Queue<TIPO> fila;
+public class Fila<Visitante>{
+    Queue<Visitante> fila;
     
     public Fila(){
-        this.fila = new LinkedList<TIPO>(); 
+        this.fila = new LinkedList<Visitante>(); 
     }
     
-    public boolean insertar(TIPO elemento) {
+    public boolean insertar(Visitante elemento) {
         try {
             return fila.add(elemento);
         } catch (IllegalStateException e) {
@@ -19,11 +19,11 @@ public class Fila<TIPO>{
         }
     }
 
-    public TIPO eliminar() {
+    public Visitante eliminar() {
         return fila.poll();
     }
 
-    public TIPO frente() {
+    public Visitante frente() {
         return fila.peek();
     }
 

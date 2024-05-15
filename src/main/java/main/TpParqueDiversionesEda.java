@@ -25,6 +25,18 @@ public class TpParqueDiversionesEda {
         
     }
     
+    /*Despedir visitante, para no decir eliminar porque parece que lo matamos.
+    Se recorre la fila y si se encuentra, se quita de la lista principal.
+    Ahora al no estar en la fila podemos decir que no se encuentra en el parque.
+    */
+    
+    public static  void despedirVisitante(Visitante persona){
+        for (int i = 0; i < visitante.verTamanio(); i++) {
+            if (visitante.frente() == persona)
+                visitante.eliminar();
+        }
+    }
+    
     /*
     Busqueda de personas por nombre dentro de la fila general del parque.
     Si la persona esta dentro de la fila, es porque se encuentra dentro del parque.
@@ -49,4 +61,4 @@ public class TpParqueDiversionesEda {
        
     }
     
-
+}
