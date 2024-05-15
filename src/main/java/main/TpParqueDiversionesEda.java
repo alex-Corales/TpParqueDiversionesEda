@@ -28,9 +28,10 @@ public class TpParqueDiversionesEda {
     public static boolean despedirVisitante(Visitante persona){
         boolean estado = false;
         for (int i = 0; i < visitante.verTamanio(); i++) {
-            if (visitante.frente() == persona)
+            if (visitante.frente().getNombre().equals(persona.getNombre())){
                 visitante.eliminar();
-            estado = true;
+                estado = true;
+            }
         }
         visitantesActuales--;
         return estado;
