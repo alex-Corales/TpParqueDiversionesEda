@@ -4,6 +4,9 @@ public class Visitante {
     private int idVisitante;
     private String nombre;
 
+    public Visitante() {
+    }
+    
     public Visitante(int idVisitante, String nombre) {
         this.idVisitante = idVisitante;
         this.nombre = nombre;
