@@ -10,19 +10,14 @@ public class TpParqueDiversionesEda {
     agrega a la cola general de entrada. Cada visitante tiene un identificador único
     */
     
-    public static void agregarVisitante(Fila visitante, int idVisitante, String nombre){
-        visitante.insertar(new Visitante(idVisitante, nombre));
-    }
-    
-    /*
-    Control de capacidad general: El sistema debe verificar periódicamente si el
-    número total de visitantes dentro del parque ha alcanzado la capacidad máxima
-    permitida. Si es así, el sistema debe detener temporalmente la entrada de nuevos
-    visitantes hasta que haya suficiente espacio disponible dentro del parque.
-    */
-    
-    public static void controlCapacidad(Fila visistante){
-        
+    public boolean registrarEntrada(Visitante vis) {
+        if (visitantesActuales >= capacidadMaxima) {
+            System.out.println("El parque está lleno");
+            return false;
+        }
+        visitante.insertar(vis);
+        visitantesActuales++;
+        return true;
     }
     
     /*Despedir visitante, para no decir eliminar porque parece que lo matamos.
@@ -56,6 +51,8 @@ public class TpParqueDiversionesEda {
     */
     
     static Fila<Visitante> visitante = new Fila();
+    private int capacidadMaxima = 100; 
+    private int visitantesActuales = 0;
     
     public static void main(String[] args) {
        
