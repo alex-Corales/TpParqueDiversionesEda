@@ -32,6 +32,7 @@ public class TpParqueDiversionesEda {
                 visitante.eliminar();
                 estado = true;
             }
+            visitante.insertar(visitante.eliminar());
         }
         visitantesActuales--;
         return estado;
