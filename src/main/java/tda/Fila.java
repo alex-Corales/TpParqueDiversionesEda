@@ -2,8 +2,9 @@ package tda;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import main.Visitante;
 
-public class Fila<Visitante>{
+public class Fila{
     Queue<Visitante> fila;
     
     public Fila(){

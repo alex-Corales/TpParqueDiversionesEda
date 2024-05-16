@@ -42,13 +42,14 @@ public class TpParqueDiversionesEda {
     Si la persona esta dentro de la fila, es porque se encuentra dentro del parque.
     */
     
-    public static boolean BuscarVisitante(String nombre){
-        boolean esta = false;
+    public static Visitante BuscarVisitante(String nombre){
+        Visitante encontrado = null;
         for (int i = 0; i < visitante.verTamanio(); i++) {
             if (visitante.frente().getNombre().equalsIgnoreCase(nombre))
-                esta = true;
+                encontrado = visitante.frente();
+            visitante.insertar(visitante.eliminar());
         }
-        return esta;
+        return encontrado;
     }
     
     
@@ -56,52 +57,124 @@ public class TpParqueDiversionesEda {
     desde los metodos definidos.
     */
     
-    static Fila<Visitante> visitante = new Fila();
+    static Fila visitante = new Fila();
     static int capacidadMaxima = 100; 
     static int visitantesActuales = 0;
+    static Atraccion[] atracciones;
     
     public static void main(String[] args) {
         int opc = 0;
+        int subopc = 0;
         Visitante vis = new Visitante(); 
         Scanner scan = new Scanner(System.in);
         
         do{
             System.out.println("1 - Ingresar visitante al parque");
             System.out.println("2 - Buscar visitante en el parque");
-            System.out.println("3 - despedir visitante del parque");
-            System.out.println("4 - Salir");
+            System.out.println("3 - Despedir visitante del parque");
+            System.out.println("4 - Atracciones");
+            System.out.println("5 - Salir");
             opc = scan.nextInt();
             
             switch(opc){
                 case 1:
                     System.out.println("Ingrese los datos del visitante: ");
-                    System.out.println("Identificador");
+                    System.out.print("Identificador: ");
                     int identificador = scan.nextInt();
                     scan.nextLine();
-                    System.out.println("Nombre: ");
+                    System.out.print("Nombre: ");
                     String nombre = scan.nextLine();
                     registrarEntrada(new Visitante(identificador, nombre));
                     break;
+                    
                 case 2:
-                    System.out.println("Ingrese el nombre del visitante que desea buscar");
+                    System.out.print("Ingrese el nombre del visitante que desea buscar -->");
                     scan.nextLine();
                     String nombreBuscar = scan.nextLine();
-                    if (BuscarVisitante(nombreBuscar)) System.out.println("Se encuentra en el parque");
+                    Visitante encontrado = BuscarVisitante(nombreBuscar);
+                    if (encontrado!=null) System.out.println(encontrado.getNombre()+" Se encuentra en el parque");
+                    else System.out.println(nombreBuscar+" No se encuentra en nuestras instalaciones");
                     break;
+                    
                 case 3:
-                    System.out.println("Ingrese los datos del visitante que desea despedir: ");
-                    System.out.println("Identificador");
-                    vis.setIdVisitante(scan.nextInt()); 
-                    scan.nextLine();
-                    System.out.println("Nombre: ");
-                    vis.setNombre(scan.nextLine());
-                    if(despedirVisitante(vis)) System.out.println("Se despidio correctamente");
-                    else System.out.println("No se pudo despedir");
+                    System.out.print("Ingrese el nombre del visitante que desea despedir --> ");
+                    Visitante despedir = BuscarVisitante(scan.nextLine());
+                    if (despedir != null){
+                        if(despedirVisitante(despedir)) System.out.println("Se despidio correctamente a"+despedir.getNombre());
+                        else System.out.println("No se pudo despedir a"+despedir.getNombre()+". Parece que no quiere irse");
+                    }else System.out.println("No se ha encontrado a esa persona dentro del parque");
                     break;
+                    
+                case 4:
+                    do{
+                        System.out.println("1 - Crear Atracciones");
+                        System.out.println("2 - Ingresar visitante a una atraccion");
+                        System.out.println("3 - Remover a visitante de una atraccion");
+                        System.out.println("4 - Volver al menu principal");
+                        subopc = scan.nextInt();
+                    
+                        switch(subopc){
+                            case 1:
+                                if (atracciones.length == 0){
+                                    System.out.print("Ingrese la cantidad de atracciones a crear -->");
+                                    atracciones = new Atraccion[scan.nextInt()];
+                                    scan.nextLine();
+                                    
+                                    for(int i=0; i<atracciones.length; i++){
+                                        System.out.print("Ingrese el nombre de la atraccion -->");
+                                        atracciones[i].setNombre(scan.next());
+                                    }
+                                }
+                                else System.out.println("Las atracciones ya fueron creadas con anterioridad");
+                                break;
+                                
+                            case 2:
+                                System.out.println("Ingrese el nombre de la atraccion");
+                                
+                                for (int i = 0; i < atracciones.length; i++) {
+                                    if(atracciones[i].getNombre().equalsIgnoreCase(scan.next())){
+                                        System.out.print("Ingrese el nombre de la persona a ingresar a la Atraccion -->");
+                                        Visitante ingresante = BuscarVisitante(scan.next());
+                                        if(ingresante != null){
+                                            atracciones[i].IngresarVisitante(ingresante);
+                                            System.out.println("Se ha ingresado a "+ingresante.getNombre()+" a la atraccion "+atracciones[i].getNombre());
+                                        }else{
+                                            System.out.println("No se ha encontrado a la persona dentro del parque");
+                                        }
+                                    }
+                                }
+                                break;
+                                
+                            case 3:
+                                System.out.println("Ingrese el nombre de la atraccion");
+                                
+                                for (int i = 0; i < atracciones.length; i++) {
+                                    if(atracciones[i].getNombre().equalsIgnoreCase(scan.next())){
+                                        System.out.print("Ingrese el nombre de la persona que se retira de la Atraccion -->");
+                                        Visitante ingresante = BuscarVisitante(scan.next());
+                                        if(ingresante != null){
+                                            atracciones[i].EliminarVisitante(ingresante);
+                                            System.out.println(ingresante.getNombre()+" se ha retirado de a la atraccion "+atracciones[i].getNombre());
+                                        }else{
+                                            System.out.println("No se ha encontrado a la persona dentro del parque");
+                                        }
+                                    }
+                                }
+                                
+                                break;
+                                
+                            default:
+                                System.out.println("Opcion no valida !");
+                                break;
+                        }
+                    
+                    }while (subopc != 4);
+                    break;
+                    
                 default:
-                    throw new AssertionError();
+                    System.out.println("Opcion no valida !");
             }
-        }while(opc != 4);
+        }while(opc != 5);
     }
     
 }
