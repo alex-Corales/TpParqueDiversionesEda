@@ -11,6 +11,10 @@ public class Atraccion {
         this.nombre = nombre;
     }
 
+    public Atraccion() {
+         visitantes = new Fila();
+    }
+
     public Fila getVisitantes() {
         return visitantes;
     }
@@ -30,8 +34,9 @@ public class Atraccion {
     public void EliminarVisitante(Visitante visitante){
         try {
             while(!visitantes.filaVacia()){
-            if(visitantes.frente() == visitante) visitantes.eliminar();
-            visitantes.insertar(visitantes.eliminar());
+                if(visitantes.frente().getNombre().equalsIgnoreCase(visitante.getNombre()) ){
+                    visitantes.eliminar();                    
+                }
             }
         } catch (Exception e) {
             System.out.println("No se pudo eliminar al visitante de la fila");

@@ -98,6 +98,7 @@ public class TpParqueDiversionesEda {
                     
                 case 3:
                     System.out.print("Ingrese el nombre del visitante que desea despedir --> ");
+                    scan.nextLine();
                     Visitante despedir = BuscarVisitante(scan.nextLine());
                     if (despedir != null){
                         if(despedirVisitante(despedir)) System.out.println("Se despidio correctamente a"+despedir.getNombre());
@@ -115,13 +116,14 @@ public class TpParqueDiversionesEda {
                     
                         switch(subopc){
                             case 1:
-                                if (atracciones.length == 0){
+                                if (atracciones == null){
                                     System.out.print("Ingrese la cantidad de atracciones a crear -->");
                                     atracciones = new Atraccion[scan.nextInt()];
                                     scan.nextLine();
                                     
                                     for(int i=0; i<atracciones.length; i++){
                                         System.out.print("Ingrese el nombre de la atraccion -->");
+                                        atracciones[i]= new Atraccion();
                                         atracciones[i].setNombre(scan.next());
                                     }
                                 }
