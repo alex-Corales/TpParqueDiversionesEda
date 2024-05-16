@@ -75,13 +75,23 @@ public class TpParqueDiversionesEda {
             System.out.println("3 - Despedir visitante del parque");
             System.out.println("4 - Atracciones");
             System.out.println("5 - Salir");
-            opc = scan.nextInt();
+            try{
+                opc = scan.nextInt();
+            }catch(Exception e){
+                System.out.println("Ingrese un entero valido");
+            }
+            
             
             switch(opc){
                 case 1:
                     System.out.println("Ingrese los datos del visitante: ");
-                    System.out.print("Identificador: ");
-                    int identificador = scan.nextInt();
+                    int identificador=0;
+                    try{
+                        System.out.print("Ingrese nro Identificador: ");
+                        identificador = scan.nextInt();
+                    }catch(Exception e){
+                        System.out.println("Erro en el ingreso del tipo entero");
+                    }
                     scan.nextLine();
                     System.out.print("Nombre: ");
                     String nombre = scan.nextLine();
@@ -93,7 +103,7 @@ public class TpParqueDiversionesEda {
                     scan.nextLine();
                     String nombreBuscar = scan.nextLine();
                     Visitante encontrado = BuscarVisitante(nombreBuscar);
-                    if (encontrado!=null) System.out.println(encontrado.getNombre()+" Se encuentra en el parque");
+                    if (encontrado!=null) System.out.println(encontrado.getIdVisitante()+" - "+encontrado.getNombre()+" Se encuentra en el parque");
                     else System.out.println(nombreBuscar+" No se encuentra en nuestras instalaciones");
                     break;
                     
@@ -102,7 +112,7 @@ public class TpParqueDiversionesEda {
                     scan.nextLine();
                     Visitante despedir = BuscarVisitante(scan.nextLine());
                     if (despedir != null){
-                        if(despedirVisitante(despedir)) System.out.println("Se despidio correctamente a"+despedir.getNombre());
+                        if(despedirVisitante(despedir)) System.out.println("Se despidio correctamente a"+despedir.getNombre()+" ID: "+despedir.getIdVisitante());
                         else System.out.println("No se pudo despedir a"+despedir.getNombre()+". Parece que no quiere irse");
                     }else System.out.println("No se ha encontrado a esa persona dentro del parque");
                     break;
@@ -113,18 +123,29 @@ public class TpParqueDiversionesEda {
                         System.out.println("2 - Ingresar visitante a una atraccion");
                         System.out.println("3 - Remover a visitante de una atraccion");
                         System.out.println("4 - Volver al menu principal");
-                        subopc = scan.nextInt();
-                    
+                        try{
+                            subopc = scan.nextInt();
+                        }catch(Exception e){
+                            System.out.println("Ingrese un entero valido");
+                        }
                         switch(subopc){
                             case 1:
                                 if (atracciones == null){
                                     System.out.print("Ingrese la cantidad de atracciones a crear -->");
-                                    atracciones = new Atraccion[scan.nextInt()];
+                                    try{
+                                        atracciones = new Atraccion[scan.nextInt()];
+                                    }catch(Exception e){
+                                        System.out.println("Ingrese un entero valido");
+                                    }
                                     scan.nextLine();
                                     
                                     for(int i=0; i<atracciones.length; i++){
                                         System.out.print("Ingrese el nombre de la atraccion -->");
-                                        atracciones[i]= new Atraccion();
+                                        try{
+                                            atracciones[i]= new Atraccion();
+                                        }catch(Exception e){
+                                            System.out.println("Ingrese correctamente el nombre de la Atraccion");
+                                        }
                                         atracciones[i].setNombre(scan.next());
                                     }
                                 }
@@ -137,8 +158,13 @@ public class TpParqueDiversionesEda {
                                 for (int i = 0; i < atracciones.length; i++) {
                                     if(atracciones[i].getNombre().equalsIgnoreCase(scan.next())){
                                         System.out.print("Ingrese el nombre de la persona a ingresar a la Atraccion -->");
-                                        Visitante ingresante = BuscarVisitante(scan.next());
-                                        if(ingresante != null){
+                                        Visitante ingresante=null;
+                                        try{
+                                            ingresante = BuscarVisitante(scan.next());
+                                        }catch(Exception e){
+                                            System.out.println("Ingrese un nombre valido para buscar");
+                                        }
+                                            if(ingresante != null){
                                             atracciones[i].IngresarVisitante(ingresante);
                                             System.out.println("Se ha ingresado a "+ingresante.getNombre()+" a la atraccion "+atracciones[i].getNombre());
                                         }else{
@@ -150,11 +176,22 @@ public class TpParqueDiversionesEda {
                                 
                             case 3:
                                 System.out.println("Ingrese el nombre de la atraccion");
-                                
+                                String atraccion="";
+                                try{
+                                    atraccion = scan.next();
+                                }catch(Exception e){
+                                    System.out.println("Ingrese un nombre de atraccion valido");
+                                }
                                 for (int i = 0; i < atracciones.length; i++) {
-                                    if(atracciones[i].getNombre().equalsIgnoreCase(scan.next())){
+                                    if(atracciones[i].getNombre().equalsIgnoreCase(atraccion)){
+                                        String persona="";
                                         System.out.print("Ingrese el nombre de la persona que se retira de la Atraccion -->");
-                                        Visitante ingresante = BuscarVisitante(scan.next());
+                                        try{
+                                            persona = scan.next();
+                                        }catch(Exception e){
+                                            System.out.println("Nombre mal ingresado");
+                                        }
+                                        Visitante ingresante = BuscarVisitante(persona);
                                         if(ingresante != null){
                                             atracciones[i].EliminarVisitante(ingresante);
                                             System.out.println(ingresante.getNombre()+" se ha retirado de a la atraccion "+atracciones[i].getNombre());
